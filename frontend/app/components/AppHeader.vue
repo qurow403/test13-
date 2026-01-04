@@ -24,4 +24,3 @@ const logout = () => {
         </div>
     </header>
 </template>
-

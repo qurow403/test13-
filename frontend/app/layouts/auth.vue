@@ -13,7 +13,3 @@ import Logo from '@/components/Logo.vue'
         </main>
     </div>
 </template>
-
-<style scoped>
-
-</style>
