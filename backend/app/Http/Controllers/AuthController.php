@@ -10,7 +10,7 @@ class AuthController extends Controller
 {
     public function register (Request $request){
         $date = ([
-            'name' => '',
+            'name' => 'required|',
             'email' => '',
             '' => '',
         ]);
