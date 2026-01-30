@@ -4,8 +4,22 @@ definePageMeta({
 })
 
 const resend = async () => {
-    await $fetch('/api/email/resend', { method: 'POST' })
-    alert('認証メールを再送しました')
+    try {
+        await $fetch('http://localhost:8000/api/email/verification-notification', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        })
+        alert('認証メールを再送しました')
+    } catch (e) {
+        alert('認証状態の確認に失敗しました')
+    }
+}
+
+const openMail = () => {
+    window.open('http://0.0.0.0:8025', '_blank')
 }
 </script>
 
@@ -14,10 +28,12 @@ const resend = async () => {
     <p>登録していただいたメールアドレスに認証メールを送付しました。</p>
     <p>メール認証を完了してください。</p>
 
-    <a href="https://mail.google.com" target="_blank" class="primary">
-        認証はこちらから
-    </a>
+    <button class="primary" @click="openMail">
+        認証はこちらから(認証メールを確認する)
+    </button>
 
-    <button class="link" @click="resend">認証メールを再送する</button>
+    <button class="link" @click="resend">
+        認証メールを再送する
+    </button>
 </div>
 </template>

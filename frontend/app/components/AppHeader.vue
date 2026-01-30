@@ -1,6 +1,24 @@
 <script setup>
-const logout = () => {
-    console.log('logout')
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const logout = async () => {
+    try {
+        await $fetch('http://localhost:8000/api/logout', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        })
+    } catch (e) {
+        console.warn('logout api failed')
+    }
+
+    localStorage.removeItem('token')
+
+    router.push('/login')
 }
 </script>
 

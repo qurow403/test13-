@@ -1,6 +1,11 @@
 <script setup>
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import * as yup from 'yup'
+import { ref } from 'vue'
+import { useRoute } from 'vue-router'
+
+const router = useRouter()
+const apiError = ref('')
 
 const schema = yup.object({
     name: yup
@@ -23,8 +28,29 @@ const schema = yup.object({
         .oneOf([yup.ref('password')], 'パスワードと一致しません')
 })
 
-const onSubmit = (values) => {
-    console.log('送信された値:', values)
+const onSubmit = async (values) => {
+    apiError.value = ''
+
+    try {
+        const res = await $fetch('http://localhost:8000/api/register', {
+            method: 'POST',
+            body: values,
+            headers: {
+                Accept: 'application/json',
+            },
+        })
+
+        localStorage.setItem('token', res.token)
+
+        router.push('/email/verify')
+
+    } catch (error) {
+        if (error?.data?.errors) {
+            apiError.value = Object.values(error.data.errors)[0][0]
+        } else {
+            apiError.value = '会員登録に失敗しました'
+        }
+    }
 }
 
 definePageMeta({
@@ -37,6 +63,9 @@ definePageMeta({
         <h1>会員登録</h1>
 
         <Form :validation-schema="schema" @submit="onSubmit">
+
+            <p v-if="apiError" class="error">{{ apiError }}</p>
+
             <div>
                 <label>ユーザー名</label>
                 <Field name="name" type="text" />

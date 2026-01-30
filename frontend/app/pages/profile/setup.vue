@@ -1,7 +1,24 @@
 <script setup>
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import * as yup from 'yup'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+onMounted(() => {
+    const tokenFromQuery = route.query.tokenFromQuery
+    const tokenFromStorage = localStorage.getItem('token')
+
+    if (tokenFromQuery) {
+        localStorage.setItem('token', tokenFromQuery)
+        return
+    }
+
+    if (!tokenFromStorage) {
+        navigateTo('/login')
+    }
+})
 
 const avatarPreview = ref(null)
 
@@ -30,8 +47,16 @@ const schema = yup.object({
         .nullable(),
 })
 
-const onSubmit = (values) => {
-    console.log('プロフィール設定:', values)
+const onSubmit = async (values) => {
+    await useFetch('http://localhost:8000/api/profile', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: values,
+    })
+
+    navigateTo('/')
 }
 </script>
 

@@ -17,10 +17,32 @@ const schema = yup.object({
         .min(8, 'パスワードは8文字以上で入力してください'),
 })
 
-const onSubmit = (values) => {
-    console.log('送信された値:', values)
+const onSubmit = async (values) => {
+    authError.value = ''
 
-    authError.value = 'ログイン情報が登録されていません'
+    try {
+        const res = await $fetch('http://localhost:8000/api/login', {
+            method: 'POST',
+            body: values,
+            headers: {
+                Accept: 'application/json',
+            },
+        })
+
+        localStorage.setItem('token', res.token)
+
+        if (!res.user.profile_completed) {
+            navigateTo('/profile/setup')
+        } else {
+            navigateTo('/')
+        }
+    } catch (error) {
+        if (error?.data?.message) {
+            authError.value = error.data.message
+        } else {
+            authError.value = 'ログインに失敗しました'
+        }
+    }
 }
 
 definePageMeta({
