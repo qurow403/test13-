@@ -1,47 +1,67 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import ProductTabs from '@/components/ProductTabs.vue'
 import ProductCard from '@/components/ProductCard.vue'
+import { mockProducts } from '@/mock/products'
 
-const currentTab = ref('おすすめ')
+const route = useRoute()
+const router = useRouter()
 
-const products = [
-    {
-        id: 1,
-        name: '腕時計',
-        price: 15000,
-        discription: 'スタイリッシュなデザインのメンズ腕時計',
-        image: 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Armani+Mens+Clock.jpg',
+const currentTab = ref(route.query.tab || 'おすすめ')
+const products = ref([])
+
+const USE_DUMMY = true
+
+watch(currentTab, (tab) => {
+    router.push({
+        query: {...route.query, tab,}
+    })
+})
+
+const fetchProducts = async () => {
+    let token = null
+
+    if  (process.client) {
+        token = localStorage.getItem('token')
+    }
+
+    const endpoint =
+        currentTab.value === 'マイリスト'
+            ? '/api/products/mylike'
+            : '/api/products'
+
+    try {
+        products.value = await $fetch(`http://localhost:8000${endpoint}`, {
+            headers: token
+                ? { Authorization: `bearer ${token}` }
+                : {},
+        })
+    } catch {
+        products.value = []
+    }
+}
+
+watch(
+    () => [currentTab.value, route.query.keyword],
+    () => {
+        if (USE_DUMMY) {
+            products.value = mockProducts
+            return
+        }
+
+        fetchProducts()
     },
-    {
-        id: 2,
-        name: 'HDD',
-        price: 5000,
-        discription: '高速で信頼性の高いハードディスク',
-        image: 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/HDD+Hard+Disk.jpg',
-    },
-    {
-        id: 3,
-        name: '玉ねぎ3束',
-        price: 300,
-        discription: '新鮮な玉ねぎ3束のセット',
-        image: 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/iLoveIMG+d.jpg',
-    },
-    {
-        id: 4,
-        name: '革靴',
-        price: 4000,
-        discription: 'クラシックなデザインの革靴',
-        image: 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Leather+Shoes+Product+Photo.jpg',
-    },
-    {
-        id: 5,
-        name: 'ノートPC',
-        price: 45000,
-        discription: '高性能なノートパソコン',
-        image: 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Living+Room+Laptop.jpg',
-    },
-]
+    { immediate: true }
+)
+
+const filteredProducts = computed(() => {
+    const keyword = route.query.keyword
+
+    if (!keyword) return products.value
+
+    return products.value.filter(p => p.name.includes(keyword))
+})
 </script>
 
 <template>
@@ -49,7 +69,7 @@ const products = [
     <ProductTabs :current="currentTab" @change="currentTab = $event" />
 
     <div class="grid">
-        <ProductCard v-for="product in products" :key="product.id" :product="product" />
+        <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product" />
     </div>
 </div>
 </template>

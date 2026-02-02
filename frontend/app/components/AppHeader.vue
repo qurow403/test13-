@@ -1,9 +1,24 @@
 <script setup>
-import { useRouter } from 'vue-router'
+import { ref, watch } from 'vue'
+import { useRouter,useRoute } from 'vue-router'
 
 const router = useRouter()
+const route = useRoute()
+
+const keyword = ref(route.query.keyword || '')
+
+watch(keyword, (newVal) => {
+    router.push({
+        query: {
+            ...route.query,
+            keyword: newVal || undefined,
+        }
+    })
+})
 
 const logout = async () => {
+    if (!ProcessingInstruction.client) return
+
     try {
         await $fetch('http://localhost:8000/api/logout', {
             method: 'POST',
@@ -17,7 +32,6 @@ const logout = async () => {
     }
 
     localStorage.removeItem('token')
-
     router.push('/login')
 }
 </script>
@@ -37,8 +51,8 @@ const logout = async () => {
 
         <div class="header-right">
             <button @click="logout">ログアウト</button>
-            <NuxtLink to="/mypage">マイページ</NuxtLink>
-            <NuxtLink to="/sell">出品</NuxtLink>
+            <NuxtLink to="/profile">マイページ</NuxtLink>
+            <NuxtLink to="/products/sell">出品</NuxtLink>
         </div>
     </header>
 </template>

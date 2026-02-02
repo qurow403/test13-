@@ -2,7 +2,6 @@
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import * as yup from 'yup'
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
 
 const router = useRouter()
 const apiError = ref('')

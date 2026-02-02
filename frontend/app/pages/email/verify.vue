@@ -1,8 +1,4 @@
 <script setup>
-definePageMeta({
-    layout: 'auth'
-})
-
 const resend = async () => {
     try {
         await $fetch('http://localhost:8000/api/email/verification-notification', {
@@ -21,6 +17,10 @@ const resend = async () => {
 const openMail = () => {
     window.open('http://0.0.0.0:8025', '_blank')
 }
+
+definePageMeta({
+    layout: 'auth'
+})
 </script>
 
 <template>

@@ -1,14 +1,15 @@
 <script setup>
-defineProps({
+const props = defineProps({
     product: Object,
 })
 </script>
 
 <template>
-<div class="card">
-    <img :src="product.image" alt="商品画像" />
-    <div class="info">
-        <p class="name">{{ product.name }}</p>
+<NuxtLink :to="`/products/${product.id}`" class="card">
+    <div class="image-wrapper">
+        <img :src="product.image" alt="商品画像" />
+        <span class="sold-badge" v-if="product.is_sold">SOLD</span>
     </div>
-</div>
+    <p class="name">{{ product.name }}</p>
+</NuxtLink>
 </template>

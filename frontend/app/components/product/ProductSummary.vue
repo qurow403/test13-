@@ -1,7 +1,15 @@
 <script setup>
-defineProps({
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const props = defineProps({
     product: Object,
 })
+
+const goPurchase = () => {
+    router.push(`/products/${props.product.id}/purchase`)
+}
 </script>
 
 <template>
@@ -15,6 +23,6 @@ defineProps({
         <span>💬 {{ product.commentsCount }}</span>
     </div>
 
-    <button class="buy">購入手続きへ</button>
+    <button class="buy" @click="goPurchase">購入手続きへ</button>
 </div>
 </template>
