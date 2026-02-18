@@ -4,13 +4,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Auth\Events\Verified;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\PurchaseController;
 
 use App\Models\User;
-
+use App\Models\Purchase;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::middleware('auth:sanctum')->post('/logout', function (Request $request) {
+    $request->user()->currentAccessToken()->delete();
+
+    return response()->json(['message' => 'logged out']);
+});
 
 Route::middleware('auth:sanctum')->post('/email/verification-notification',
     function (Request $request) {
@@ -56,9 +63,56 @@ Route::get('/email/verify/{id}/{hash}', function ($id, $hash){
 
 
 Route::middleware('auth:sanctum')->post('/profile', function (request $request) {
+    $user = $request->user();
+
+    $data = $request->validate([
+        'name' => 'required|string|max:255',
+        'zip' => 'required|string|max:20',
+        'address' => 'required|string|max:255',
+        'building' => 'nullable|string|max:255',
+        'avatar' => 'nullable|image|max:2048',
+    ], [
+        'name.required' => 'ユーザー名を入力してください',
+        'zip.required' => '郵便番号を入力してください',
+        'address.required' => '住所を入力してください',
+    ]);
+
+    if ($request->hasFile('avatar')) {
+        $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
+    }
+
     $request->user()->update([
+        ...$data,
         'profile_completed' =>true,
     ]);
 
-    return response()->json(['message' => 'profile updated']);
+    return response()->json($user);
+});
+
+
+Route::get('/products', [ProductController::class, 'index']);
+Route::get('/products/mylike', [ProductController::class, 'mylike'])
+    ->middleware('auth:sanctum');
+
+Route::get('/products/{id}', [ProductController::class, 'show']);
+Route::middleware('auth:sanctum')->post('/products/{id}/like', [ProductController::class, 'toggleLike']);
+Route::middleware('auth:sanctum')->post('/products/{id}/comments', [ProductController::class, 'storeComment']);
+
+Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
+    $user = $request->user();
+
+    return [
+        ...$user->toArray(),
+        'avatar' => $user->avatar
+            ? Storage::url($user->avatar)
+            : null,
+    ];
+});
+
+Route::middleware('auth:sanctum')->post('/products/{id}/purchase', [PurchaseController::class, 'store']);
+
+Route::middleware('auth:sanctum')->get('/purchases', function (Request $request) {
+    return Purchase::with('product')
+        ->where('user_id', $request->user()->id)
+        ->get();
 });

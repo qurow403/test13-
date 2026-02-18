@@ -22,9 +22,27 @@ const schema = yup.object({
         .nullable(),
 })
 
-const onSubmit = (values) => {
+const onSubmit = async (values) => {
+    console.log('submit fired', values)
+
+    const token = localStorage.getItem('token')
+    if (!token) return alert('ログインしてください')
+
+    await $fetch('http://localhost:8000/api/profile', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        body: {
+            name: 'temp',
+            ...values,
+        },
+    })
+
     address.value = values
-    navigateBack()
+
+    const router = useRouter()
+    router.back()
 }
 </script>
 
@@ -32,7 +50,7 @@ const onSubmit = (values) => {
 <div class="address-edit">
     <h1>住所変更</h1>
 
-    <Form :validation-schema="schema" @submit="onSubmit">
+    <Form :validation-schema="schema" :initial-values="address" @submit="onSubmit">
 
         <div>
             <label>郵便番号</label>

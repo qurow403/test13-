@@ -1,17 +1,14 @@
 <script setup>
-import { ref, computed, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import ProductTabs from '@/components/ProductTabs.vue'
 import ProductCard from '@/components/ProductCard.vue'
-import { mockProducts } from '@/mock/products'
 
 const route = useRoute()
 const router = useRouter()
 
 const currentTab = ref(route.query.tab || 'おすすめ')
 const products = ref([])
-
-const USE_DUMMY = true
 
 watch(currentTab, (tab) => {
     router.push({
@@ -31,37 +28,37 @@ const fetchProducts = async () => {
             ? '/api/products/mylike'
             : '/api/products'
 
+    console.log('======================')
+    console.log('currentTab:', currentTab.value)
+    console.log('token:', token)
+    console.log('endpoint:', endpoint)
+    console.log('keyword:', route.query.keyword)
+    console.log('======================')
+
+
     try {
-        products.value = await $fetch(`http://localhost:8000${endpoint}`, {
-            headers: token
-                ? { Authorization: `bearer ${token}` }
-                : {},
-        })
-    } catch {
+        const res = await $fetch(`http://localhost:8000${endpoint}`,{
+                params: { keyword: route.query.keyword },
+                headers: token
+                    ? { Authorization: `Bearer ${token}` }
+                    : {},
+            })
+
+        console.log('API success:', res)
+        products.value = res
+
+    } catch (e) {
+        console.error('API error:', e)
         products.value = []
     }
 }
 
 watch(
     () => [currentTab.value, route.query.keyword],
-    () => {
-        if (USE_DUMMY) {
-            products.value = mockProducts
-            return
-        }
-
-        fetchProducts()
-    },
+    fetchProducts,
     { immediate: true }
 )
 
-const filteredProducts = computed(() => {
-    const keyword = route.query.keyword
-
-    if (!keyword) return products.value
-
-    return products.value.filter(p => p.name.includes(keyword))
-})
 </script>
 
 <template>
@@ -69,7 +66,7 @@ const filteredProducts = computed(() => {
     <ProductTabs :current="currentTab" @change="currentTab = $event" />
 
     <div class="grid">
-        <ProductCard v-for="product in filteredProducts" :key="product.id" :product="product" />
+        <ProductCard v-for="product in products" :key="product.id" :product="product" />
     </div>
 </div>
 </template>

@@ -15,6 +15,8 @@ class AuthController extends Controller
             'name' => ['required'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'confirmed', 'min:8'],
+        ], [
+            'email.unique' => 'このメールアドレスはすでに登録されています'
         ]);
 
         $user = User::create([

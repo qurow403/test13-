@@ -1,30 +1,59 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import ProductCard from '~/components/ProductCard.vue'
-import { mockProducts } from '~/mock/products'
 
-const user = {
-    name: '山田太郎',
-    icon: 'https://placehold.jp/100×100.png'
-}
+const user = ref('null')
 
 const currentTab = ref('出品')
 
-const sellingProducts = mockProducts.slice(0, 5)
-const purchaseProducts = mockProducts.slice(5)
+const sellingProducts = ref([])
+const purchaseProducts = ref([])
 
 const displayProducts = computed(() => {
     return currentTab.value === '出品'
-        ? sellingProducts
-        : purchaseProducts
+        ? sellingProducts.value
+        : purchaseProducts.value
+})
+
+const fetchProfile = async () => {
+    const token = localStorage.getItem('token')
+    if (!token) return
+
+    const res = await $fetch('http://localhost:8000/api/me', {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    })
+
+    user.value = res
+}
+
+const fetchPurchases = async () => {
+    const token = localStorage.getItem('token')
+    if (!token) return
+
+    const res = await $fetch('http://localhost:8000/api/purchases', {
+        headers: { Authorization: `Bearer ${token}` }
+    })
+
+    purchaseProducts.value = res.map(p => p.product)
+}
+
+onMounted(() => {
+    fetchProfile()
+    fetchPurchases()
 })
 </script>
 
 <template>
 <div>
     <div class="profile">
-        <div class="user">
-            <img :src="user.icon" class="icon">
+
+        <div v-if="user" class="user">
+            <img :src="user.avatar
+                ? 'http://localhost:8000' + user.avatar
+                : 'https://placehold.jp/100×100.png'"
+                class="icon">
             <h2>{{ user.name }}</h2>
 
             <NuxtLink to="/profile/setup" class="edit">
@@ -33,7 +62,7 @@ const displayProducts = computed(() => {
         </div>
 
         <div class="tabs">
-            <button :class="{ active: currentTab === '出品' }" @click="currentTab === '出品'">
+            <button :class="{ active: currentTab === '出品' }" @click="currentTab = '出品'">
                 出品した商品
             </button>
 

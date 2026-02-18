@@ -1,16 +1,53 @@
 <script setup>
 import { ref } from 'vue';
+import { useRoute } from 'vue-router'
 
-defineProps({
+const route = useRoute()
+
+const props = defineProps({
     comments: Array,
 })
 
-const newComment = ref('')
+const emit = defineEmits(['new-comment'])
 
-const submitComment = () => {
-    if (!newComment.value.trim()) return
-    console.log('送信コメント:', newComment.value)
-    newComment.value = ''
+const newComment = ref('')
+const errors = ref(null)
+
+const baseURL = 'http://localhost:8000'
+
+const submitComment = async () => {
+    try {
+        errors.value = null
+
+        const token = localStorage.getItem('token')
+        if (!token) return alert('ログインしてください')
+
+        if (!newComment.value.trim()) {
+            errors.value = { body: ['コメントは必須です'] }
+            return
+        }
+
+        const res = await $fetch(
+            `http://localhost:8000/api/products/${route.params.id}/comments`,
+            {
+                method: 'POST',
+                body: { body: newComment.value },
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            }
+        )
+
+        emit('new-comment', res)
+        newComment.value = ''
+
+    } catch (e) {
+        if (e.response?._data?.errors) {
+            errors.value = e.response._data.errors
+        } else {
+            alert('コメント送信に失敗しました')
+        }
+    }
 }
 </script>
 
@@ -20,7 +57,10 @@ const submitComment = () => {
 
     <div v-for="comment in comments" :key="comment.id">
         <div class="comment-header">
-            <img :src="comment.avatar"  alt="プロフィール画像" class="avatar" />
+            <img
+                :src="comment.avatar ? baseURL + comment.avatar : null"
+                class="avatar"
+            />
             <p class="user">{{ comment.user }}</p>
         </div>
 
@@ -31,6 +71,8 @@ const submitComment = () => {
         <h3>商品へのコメント</h3>
 
         <textarea v-model="newComment"></textarea>
+
+        <p v-if="errors?.body" class="error">{{ errors.body[0] }}</p>
 
         <button @click="submitComment">コメントを送信する</button>
     </div>

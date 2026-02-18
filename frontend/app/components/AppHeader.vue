@@ -17,7 +17,7 @@ watch(keyword, (newVal) => {
 })
 
 const logout = async () => {
-    if (!ProcessingInstruction.client) return
+    if (!process.client) return
 
     try {
         await $fetch('http://localhost:8000/api/logout', {
@@ -46,7 +46,7 @@ const logout = async () => {
         </div>
 
         <div class="header-center">
-            <input type="text" placeholder="なにをお探しですか？" class="search" />
+            <input v-model="keyword" type="text" placeholder="なにをお探しですか？" class="search" />
         </div>
 
         <div class="header-right">

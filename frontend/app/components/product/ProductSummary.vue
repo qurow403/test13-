@@ -10,6 +10,8 @@ const props = defineProps({
 const goPurchase = () => {
     router.push(`/products/${props.product.id}/purchase`)
 }
+
+const emit = defineEmits(['like'])
 </script>
 
 <template>
@@ -19,7 +21,9 @@ const goPurchase = () => {
     <p class="price">¥{{ product.price }}(税込)</p>
 
     <div class="meta">
-        <span>❤️ {{ product.likes }}</span>
+        <span class="like" :class="{ active: product.liked_by_me }" @click="$emit('like')">
+            ❤️ {{ product.likes }}
+        </span>
         <span>💬 {{ product.commentsCount }}</span>
     </div>
 

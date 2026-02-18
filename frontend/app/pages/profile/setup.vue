@@ -6,27 +6,60 @@ import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
-onMounted(() => {
-    const tokenFromQuery = route.query.tokenFromQuery
+const checkAuth = () => {
+    const tokenFromQuery = route.query.token
     const tokenFromStorage = localStorage.getItem('token')
 
     if (tokenFromQuery) {
         localStorage.setItem('token', tokenFromQuery)
-        return
     }
 
-    if (!tokenFromStorage) {
+    if ( !tokenFromStorage && !tokenFromQuery) {
         navigateTo('/login')
     }
-})
+}
 
+const avatarFile = ref(null)
 const avatarPreview = ref(null)
 
 const onSelectImage = (e) => {
     const file = e.target.files[0]
     if (!file) return
 
+    avatarFile.value = file
     avatarPreview.value = URL.createObjectURL(file)
+}
+
+const initialValues = ref({
+    name: '',
+    zip: '',
+    address: '',
+    building: '',
+})
+
+const loaded = ref(false)
+
+const fetchProfile = async () => {
+    const token = localStorage.getItem('token')
+    if (!token) return
+    const user = await $fetch('http://localhost:8000/api/me', {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    })
+
+    initialValues.value = {
+        name: user.name || '',
+        zip: user.zip || '',
+        address: user.address || '',
+        building: user.building || '',
+    }
+
+    if (user.avatar) {
+        avatarPreview.value = `http://localhost:8000${user.avatar}`
+    }
+
+    loaded.value = true
 }
 
 const schema = yup.object({
@@ -48,16 +81,37 @@ const schema = yup.object({
 })
 
 const onSubmit = async (values) => {
-    await useFetch('http://localhost:8000/api/profile', {
-        method: 'POST',
-        headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-        body: values,
-    })
+    try {
+        const formData = new FormData()
 
-    navigateTo('/')
+        formData.append('name', values.name)
+        formData.append('zip', values.zip)
+        formData.append('address', values.address)
+        formData.append('building', values.building || '')
+
+        if (avatarFile.value) {
+            formData.append('avatar', avatarFile.value)
+        }
+
+        await fetch('http://localhost:8000/api/profile', {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+            body: formData,
+        })
+
+        navigateTo('/profile')
+    } catch (e) {
+        console.error(e)
+        alert('更新に失敗しました')
+    }
 }
+
+onMounted(async () => {
+    checkAuth()
+    await fetchProfile()
+})
 </script>
 
 <template>
@@ -76,7 +130,7 @@ const onSubmit = async (values) => {
         </label>
     </div>
 
-    <Form :validation-schema="schema" @submit="onSubmit">
+    <Form v-if="loaded" :validation-schema="schema" :initial-values="initialValues" @submit="onSubmit">
         <div>
             <label>ユーザー名</label>
             <Field name="name" />
