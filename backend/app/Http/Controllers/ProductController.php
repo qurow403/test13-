@@ -27,10 +27,10 @@ class ProductController extends Controller
 
         return $products->map(function ($product) {
             return [
-                'id' =>$product->id ,
+                'id' =>$product->id,
                 'name' => $product->name,
                 'image' => $product->image,
-                'is_sold' => $product->purchase ? true : false,
+                'is_sold' => $product->purchase !== null,
             ];
         });
     }
@@ -62,23 +62,39 @@ class ProductController extends Controller
     public function show($id)
     {
         $product = Product::with([
-            'comments.user'
+            'comments.user',
+            'categories',
+            'condition'
         ])->withCount([
             'likedUsers',
             'comments'
         ])->findOrFail($id);
 
-        $liked = false;
-
-        if (Auth::check()) {
-            $liked = Auth::user()
-            ->likes()
-            ->where('product_id', $id)
-            ->exists();
-        }
+        $liked = Auth::check()
+            ? Auth::user()->likes()->where('product_id', $id)->exists()
+            : false;
 
         return response()->json([
-            ...$product->toArray(),
+            'id' => $product->id,
+            'name' => $product->name,
+            'brand' => $product->brand,
+            'description' => $product->description,
+            'price' => $product->price,
+
+            'image' => $product->image
+                ? (
+                    str_starts_with($product->image, 'http')
+                        ? $product->image
+                        : (
+                            str_starts_with($product->image,'products/')
+                            ? url(Storage::url($product->image))
+                            : url('/images/' . $product->image)
+                        )
+                )
+                :null,
+
+            'categories' => $product->categories->pluck('name'),
+            'condition' => $product->condition?->name ?? '',
             'likes' => $product->liked_users_count,
             'commentsCount' => $product->comments_count,
             'liked_by_me' => $liked,
@@ -141,5 +157,42 @@ class ProductController extends Controller
                 ? Storage::url($comment->user->avatar)
                 : null,
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'brand' => 'nullable|string|max:255',
+            'description' => 'required|string',
+            'category_ids' => 'required|array|min:1',
+            'category_ids.*' => 'exists:categories,id',
+            'condition_id' => 'required|exists:conditions,id',
+            'price' => 'required|numeric',
+            'image' => 'required|image|max:2048',
+        ], [
+            'name.required' => '商品名を入力してください',
+            'description.required' => '商品の説明を入力してください',
+            'price.required' => '販売価格を入力してください',
+            'image.required' => '画像を選択してください',
+        ]);
+
+        $path = $request->file('image')->store('products', 'public');
+
+        $data['user_id'] = Auth::id();
+
+        $product = Product::create([
+            'name' => $data['name'],
+            'brand' => $data['brand'] ?? null,
+            'description' => $data['description'],
+            'condition_id' => $data['condition_id'],
+            'price' => $data['price'],
+            'image' => $path,
+            'user_id' => Auth::id(),
+        ]);
+
+        $product->categories()->attach($data['category_ids']);
+
+        return response()->json($product);
     }
 }

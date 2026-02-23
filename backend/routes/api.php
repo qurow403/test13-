@@ -6,6 +6,8 @@ use Illuminate\Auth\Events\Verified;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ConditionController;
 
 use App\Models\User;
 use App\Models\Purchase;
@@ -90,7 +92,7 @@ Route::middleware('auth:sanctum')->post('/profile', function (request $request) 
 });
 
 
-Route::get('/products', [ProductController::class, 'index']);
+Route::middleware('auth:sanctum')->get('/products', [ProductController::class, 'index']);
 Route::get('/products/mylike', [ProductController::class, 'mylike'])
     ->middleware('auth:sanctum');
 
@@ -115,4 +117,13 @@ Route::middleware('auth:sanctum')->get('/purchases', function (Request $request)
     return Purchase::with('product')
         ->where('user_id', $request->user()->id)
         ->get();
+});
+
+Route::middleware('auth:sanctum')->post('/products', [ProductController::class, 'store']);
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/conditions', function (){
+    return \App\Models\Condition::orderBy('sort_order')->get();
+});
+Route::middleware('auth:sanctum')->get('/my-products', function (Request $request){
+    return \App\Models\Product::where('user_id', $request->user()->id)->get();
 });

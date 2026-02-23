@@ -93,7 +93,7 @@ const onSubmit = async (values) => {
             formData.append('avatar', avatarFile.value)
         }
 
-        await fetch('http://localhost:8000/api/profile', {
+        await $fetch('http://localhost:8000/api/profile', {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -101,7 +101,7 @@ const onSubmit = async (values) => {
             body: formData,
         })
 
-        navigateTo('/profile')
+        navigateTo('/')
     } catch (e) {
         console.error(e)
         alert('更新に失敗しました')

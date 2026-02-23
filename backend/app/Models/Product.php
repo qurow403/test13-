@@ -8,12 +8,13 @@ class Product extends Model
 {
     protected $fillable = [
         'name',
+        'brand',
         'price',
         'description',
         'image',
-        'condition',
         'user_id',
         'is_sold',
+        'condition_id',
     ];
 
     public function user()
@@ -34,5 +35,15 @@ class Product extends Model
     public function purchase()
     {
         return $this->hasOne(Purchase::class);
+    }
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function condition()
+    {
+        return $this->belongsTo(Condition::class);
     }
 }

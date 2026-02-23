@@ -1,7 +1,13 @@
 <script setup>
 defineProps({
-    categories: Array,
-    condition: String,
+    categories: {
+        type: Array,
+        default: () => []
+    },
+    condition: {
+        type: String,
+        default: ''
+    }
 })
 </script>
 
@@ -10,12 +16,14 @@ defineProps({
     <h3>商品の情報</h3>
 
     <p>
-        カテゴリ
-        <span v-for="category in categories" :key="category">
-            {{ category }}
+        カテゴリ-
+        <span v-for="c in categories" :key="c" class="category-tag">
+            {{ c }}
         </span>
     </p>
 
-    <p>商品の状態 {{ condition }}</p>
+    <p>商品の状態
+        <span>{{ condition }}</span>
+    </p>
 </div>
 </template>

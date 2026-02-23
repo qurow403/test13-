@@ -39,9 +39,9 @@ const fetchProducts = async () => {
     try {
         const res = await $fetch(`http://localhost:8000${endpoint}`,{
                 params: { keyword: route.query.keyword },
-                headers: token
-                    ? { Authorization: `Bearer ${token}` }
-                    : {},
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             })
 
         console.log('API success:', res)

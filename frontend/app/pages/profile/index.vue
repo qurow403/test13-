@@ -28,6 +28,17 @@ const fetchProfile = async () => {
     user.value = res
 }
 
+const fetchProducts = async () => {
+    const token = localStorage.getItem('token')
+    if (!token) return
+
+    const res = await $fetch('http://localhost:8000/api/my-products', {
+        headers: { Authorization: `Bearer ${token}` }
+    })
+
+    sellingProducts.value = res
+}
+
 const fetchPurchases = async () => {
     const token = localStorage.getItem('token')
     if (!token) return
@@ -42,6 +53,7 @@ const fetchPurchases = async () => {
 onMounted(() => {
     fetchProfile()
     fetchPurchases()
+    fetchProducts()
 })
 </script>
 
