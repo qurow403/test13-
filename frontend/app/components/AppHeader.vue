@@ -1,11 +1,20 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed, onMounted } from 'vue'
 import { useRouter,useRoute } from 'vue-router'
 
 const router = useRouter()
 const route = useRoute()
 
 const keyword = ref(route.query.keyword || '')
+const token = ref(null)
+
+onMounted(() => {
+    if (process.client) {
+        token.value = localStorage.getItem('token')
+    }
+})
+
+const isLoggedIn = computed(() => !!token.value)
 
 watch(keyword, (newVal) => {
     router.push({
@@ -32,6 +41,7 @@ const logout = async () => {
     }
 
     localStorage.removeItem('token')
+    token.value = null
     router.push('/login')
 }
 </script>
@@ -50,7 +60,8 @@ const logout = async () => {
         </div>
 
         <div class="header-right">
-            <button @click="logout">ログアウト</button>
+            <button v-if="isLoggedIn" @click="logout">ログアウト</button>
+            <NuxtLink v-else to="/login">ログイン</NuxtLink>
             <NuxtLink to="/profile">マイページ</NuxtLink>
             <NuxtLink to="/products/sell">出品</NuxtLink>
         </div>

@@ -92,9 +92,8 @@ Route::middleware('auth:sanctum')->post('/profile', function (request $request) 
 });
 
 
-Route::middleware('auth:sanctum')->get('/products', [ProductController::class, 'index']);
-Route::get('/products/mylike', [ProductController::class, 'mylike'])
-    ->middleware('auth:sanctum');
+Route::get('/products', [ProductController::class, 'index']);
+Route::middleware('auth:sanctum')->get('/products/mylike', [ProductController::class, 'mylike']);
 
 Route::get('/products/{id}', [ProductController::class, 'show']);
 Route::middleware('auth:sanctum')->post('/products/{id}/like', [ProductController::class, 'toggleLike']);

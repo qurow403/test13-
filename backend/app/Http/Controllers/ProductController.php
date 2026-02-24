@@ -19,13 +19,13 @@ class ProductController extends Controller
             $query->where('name', 'like', '%' . $request->keyword . '%');
         }
 
-        if (Auth::check()) {
-            $query->where('user_id', '!=', Auth::id());
+        $user = auth('sanctum')->user();
+
+        if ($user) {
+            $query->where('user_id', '!=', $user->id);
         }
 
-        $products = $query->latest()->get();
-
-        return $products->map(function ($product) {
+        return $query->latest()->get()->map(function ($product) {
             return [
                 'id' =>$product->id,
                 'name' => $product->name,

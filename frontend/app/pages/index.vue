@@ -16,6 +16,13 @@ watch(currentTab, (tab) => {
     })
 })
 
+watch(
+    () => route.query.tab,
+    (tab) => {
+        currentTab.value = tab || 'おすすめ'
+    }
+)
+
 const fetchProducts = async () => {
     let token = null
 
