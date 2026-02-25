@@ -1,4 +1,8 @@
 <script setup>
+definePageMeta({
+    middleware: 'auth'
+})
+
 import { ref, computed, onMounted } from 'vue'
 import ProductCard from '~/components/ProductCard.vue'
 

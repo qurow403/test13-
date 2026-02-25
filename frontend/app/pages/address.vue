@@ -1,4 +1,8 @@
 <script setup>
+definePageMeta({
+    middleware: 'auth'
+})
+
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import * as yup from 'yup'
 

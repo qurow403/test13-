@@ -11,8 +11,8 @@ const currentTab = ref(route.query.tab || 'おすすめ')
 const products = ref([])
 
 watch(currentTab, (tab) => {
-    router.push({
-        query: {...route.query, tab,}
+    router.replace({
+        query: { ...route.query, tab }
     })
 })
 
@@ -24,10 +24,15 @@ watch(
 )
 
 const fetchProducts = async () => {
-    let token = null
 
+    let token = null
     if  (process.client) {
         token = localStorage.getItem('token')
+    }
+
+    if (currentTab.value === 'マイリスト' && !token) {
+        products.value = []
+        return
     }
 
     const endpoint =
@@ -35,23 +40,25 @@ const fetchProducts = async () => {
             ? '/api/products/mylike'
             : '/api/products'
 
-    console.log('======================')
-    console.log('currentTab:', currentTab.value)
-    console.log('token:', token)
-    console.log('endpoint:', endpoint)
-    console.log('keyword:', route.query.keyword)
-    console.log('======================')
-
-
     try {
-        const res = await $fetch(`http://localhost:8000${endpoint}`,{
-                params: { keyword: route.query.keyword },
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
+        const params = {}
+        if (route.query.keyword) {
+            params.keyword = route.query.keyword
+        }
 
-        console.log('API success:', res)
+        const options = { params }
+
+        if (token) {
+            options.headers = {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        const res = await $fetch(
+            `http://localhost:8000${endpoint}`,
+            options
+        )
+
         products.value = res
 
     } catch (e) {
@@ -65,7 +72,6 @@ watch(
     fetchProducts,
     { immediate: true }
 )
-
 </script>
 
 <template>

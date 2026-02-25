@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import ProductImage from '~/components/product/ProductImage.vue'
 import ProductSummary from '~/components/product/ProductSummary.vue'
@@ -9,6 +9,8 @@ import ProductInfo from '~/components/product/ProductInfo.vue'
 import ProductComments from '~/components/product/ProductComments.vue';
 
 const route = useRoute()
+const router = useRouter()
+
 const product = ref(null)
 
 const fetchProduct = async () => {
@@ -24,11 +26,16 @@ const fetchProduct = async () => {
 
 onMounted(fetchProduct)
 
-const token = process.client ? localStorage.getItem('token') : null
-
 const toggleLike = async () => {
     try {
-        if (!token) return alert('ログインしてください')
+        const token = process.client ? localStorage.getItem('token') : null
+
+        if (!token) {
+            return router.push({
+                path: '/login',
+                query: { redirect: route.fullPath }
+            })
+        }
 
         const res = await $fetch(
             `http://localhost:8000/api/products/${product.value.id}/like`,
@@ -42,9 +49,9 @@ const toggleLike = async () => {
 
         product.value.likes = res.likes_count
         product.value.liked_by_me = res.liked
+
     } catch (e) {
         console.error(e)
-        alert('いいねに失敗しました')
     }
 }
 

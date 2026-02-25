@@ -1,10 +1,13 @@
 <script setup>
+definePageMeta({
+    layout: 'default',
+    middleware: 'auth'
+})
+
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import * as yup from 'yup'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-
-definePageMeta({ layout: 'auth' })
 
 const router = useRouter()
 

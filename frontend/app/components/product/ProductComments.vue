@@ -1,8 +1,9 @@
 <script setup>
 import { ref } from 'vue';
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
+const router = useRouter()
 
 const props = defineProps({
     comments: Array,
@@ -19,8 +20,16 @@ const submitComment = async () => {
     try {
         errors.value = null
 
-        const token = localStorage.getItem('token')
-        if (!token) return alert('ログインしてください')
+        const token = process.client
+            ? localStorage.getItem('token')
+            : null
+
+        if (!token) {
+            return router.push({
+                path: '/login',
+                query: { redirect: route.fullPath }
+            })
+        }
 
         if (!newComment.value.trim()) {
             errors.value = { body: ['コメントは必須です'] }
@@ -44,8 +53,6 @@ const submitComment = async () => {
     } catch (e) {
         if (e.response?._data?.errors) {
             errors.value = e.response._data.errors
-        } else {
-            alert('コメント送信に失敗しました')
         }
     }
 }

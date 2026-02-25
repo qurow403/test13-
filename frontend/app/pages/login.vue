@@ -1,7 +1,11 @@
 <script setup>
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import { ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import * as yup from 'yup'
+
+const route = useRoute()
+const router = useRouter()
 
 const authError = ref('')
 
@@ -31,11 +35,14 @@ const onSubmit = async (values) => {
 
         localStorage.setItem('token', res.token)
 
+        const redirectPath = route.query.redirect
+
         if (!res.user.profile_completed) {
-            navigateTo('/profile/setup')
-        } else {
-            navigateTo('/')
+            return router.push('/profile/setup')
         }
+
+        router.push(redirectPath || '/')
+
     } catch (error) {
         if (error?.data?.message) {
             authError.value = error.data.message
