@@ -1,5 +1,5 @@
 <script setup>
-const props = ({
+const props = defineProps ({
     modelValue: String,
 })
 
@@ -8,6 +8,11 @@ const emit = defineEmits(['update:modelValue'])
 const updateValue = (e) => {
     emit('update:modelValue', e.target.value)
 }
+
+const paymentOptions = [
+    { value: 'konbini', label: 'コンビニ払い' },
+    { value: 'card', label: 'カード払い'  }
+]
 </script>
 
 <template>
@@ -16,8 +21,10 @@ const updateValue = (e) => {
 
     <select :value="modelValue" @change="updateValue">
         <option value="">選択してください</option>
-        <option value="コンビニ支払い">コンビニ支払い</option>
-        <option value="カード払い">カード払い</option>
+
+        <option v-for="option in paymentOptions" :key="option.value" :value="option.value">
+            {{ option.label }}
+        </option>
     </select>
 </div>
 </template>

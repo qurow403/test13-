@@ -3,9 +3,8 @@ definePageMeta({
     middleware: 'auth'
 })
 
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router';
-import { onMounted } from 'vue'
 
 import PurchaseProduct from '~/components/purchase/PurchaseProduct.vue'
 import PurchasePayment from '~/components/purchase/PurchasePayment.vue'
@@ -20,34 +19,43 @@ const paymentMethod = ref('')
 const address = useState('address', () => null)
 
 const fetchProduct = async () => {
-    try {
-        product.value = await $fetch(`http://localhost:8000/api/products/${productId}`)
-    } catch (e) {
-        console.error(e)
-        alert('商品の取得に失敗')
+    product.value = await $fetch(`http://localhost:8000/api/products/${productId}`)
+
+    const token = localStorage.getItem('token')
+    if (token) {
+        const user = await $fetch('http://localhost:8000/api/me', {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+
+        address.value = {
+            zip: user.zip,
+            address: user.address,
+            building: user.building,
+        }
     }
 }
 
 const buy = async () => {
+    if (!paymentMethod.value) {
+        return alert('支払い方法を選択してください')
+    }
+
+    if (!process.client) return
+
     try {
         const token = localStorage.getItem('token')
         if (!token) return alert('ログインしてください')
-
-        if (!address.value?.zip || !address.value?.address) {
-            return alert('住所が未設定です')
-        }
-
-        if (!paymentMethod.value) {
-            return alert('支払い方法を選択してください')
-        }
-
-        console.log('送信:', address.value, paymentMethod.value)
 
         const res = await $fetch(
             `http://localhost:8000/api/products/${productId}/purchase`,
             {
                 method: 'POST',
-                headers: { Authorization: `Bearer ${token}` },
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    Accept: `application/json`
+                },
                 body: {
                     zip: address.value?.zip,
                     address: address.value?.address,
@@ -57,16 +65,22 @@ const buy = async () => {
             }
         )
 
-        alert('購入完了!')
-        navigateTo('/')
+        window.location.href = res.url
 
     } catch (e) {
-        console.error('購入エラー:', e.response?._data)
-        alert(JSON.stringify(e.response?._data))
+        console.error(e)
+
+        if (e.response?._data) {
+            alert(JSON.stringify(e.response._data))
+        } else {
+            alert(e.message)
+        }
     }
 }
 
 const fetchProfile = async () => {
+    if (!process.client) return
+
     const token = localStorage.getItem('token')
     if (!token) return
 

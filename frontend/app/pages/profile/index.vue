@@ -4,11 +4,14 @@ definePageMeta({
 })
 
 import { ref, computed, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import ProductCard from '~/components/ProductCard.vue'
 
 const user = ref('null')
-
 const currentTab = ref('出品')
+
+const route = useRoute()
+const router = useRouter()
 
 const sellingProducts = ref([])
 const purchaseProducts = ref([])
@@ -19,8 +22,13 @@ const displayProducts = computed(() => {
         : purchaseProducts.value
 })
 
+const getToken = () => {
+    if (!process.client) return null
+    return localStorage.getItem('token')
+}
+
 const fetchProfile = async () => {
-    const token = localStorage.getItem('token')
+    const token = getToken()
     if (!token) return
 
     const res = await $fetch('http://localhost:8000/api/me', {
@@ -33,7 +41,7 @@ const fetchProfile = async () => {
 }
 
 const fetchProducts = async () => {
-    const token = localStorage.getItem('token')
+    const token = getToken()
     if (!token) return
 
     const res = await $fetch('http://localhost:8000/api/my-products', {
@@ -44,7 +52,7 @@ const fetchProducts = async () => {
 }
 
 const fetchPurchases = async () => {
-    const token = localStorage.getItem('token')
+    const token = getToken()
     if (!token) return
 
     const res = await $fetch('http://localhost:8000/api/purchases', {
@@ -54,10 +62,36 @@ const fetchPurchases = async () => {
     purchaseProducts.value = res.map(p => p.product)
 }
 
-onMounted(() => {
-    fetchProfile()
-    fetchPurchases()
-    fetchProducts()
+const handleStripeSuccess = async () => {
+    const sessionId = route.query.session_id
+    if (!sessionId) return
+
+    const token = getToken()
+    if (!token) return
+
+    try {
+        await $fetch('http://localhost:8000/api/purchase/success', {
+            method: 'POST',
+            headers: { Authorization: `Bearer ${token}` },
+            body: { session_id: sessionId }
+        })
+
+        await fetchPurchases()
+        await fetchProducts()
+
+        currentTab.value = '購入'
+        router.replace({ query: {} })
+
+    } catch (e) {
+        console.error(e)
+    }
+}
+
+onMounted(async () => {
+    await handleStripeSuccess()
+    await fetchProfile()
+    await fetchPurchases()
+    await fetchProducts()
 })
 </script>
 

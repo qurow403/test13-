@@ -13,9 +13,10 @@ class Product extends Model
         'description',
         'image',
         'user_id',
-        'is_sold',
         'condition_id',
     ];
+
+    protected $appends = ['is_sold'];
 
     public function user()
     {
@@ -45,5 +46,10 @@ class Product extends Model
     public function condition()
     {
         return $this->belongsTo(Condition::class);
+    }
+
+    public function getIsSoldAttribute()
+    {
+        return $this->purchase()->exists();
     }
 }

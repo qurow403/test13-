@@ -111,6 +111,7 @@ Route::middleware('auth:sanctum')->get('/me', function (Request $request) {
 });
 
 Route::middleware('auth:sanctum')->post('/products/{id}/purchase', [PurchaseController::class, 'store']);
+Route::middleware('auth:sanctum')->post('/purchase/success', [PurchaseController::class, 'success']);
 
 Route::middleware('auth:sanctum')->get('/purchases', function (Request $request) {
     return Purchase::with('product')
