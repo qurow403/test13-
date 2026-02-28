@@ -1,6 +1,6 @@
 export default defineNuxtRouteMiddleware((to, from) =>
 {
-    if (ProcessingInstruction.server) return
+    if (process.server) return
 
     const token = localStorage.getItem('token')
 

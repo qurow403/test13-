@@ -1,4 +1,4 @@
-<script setup>
+address.vue <script setup>
 definePageMeta({
     middleware: 'auth'
 })
@@ -6,11 +6,11 @@ definePageMeta({
 import { Form, Field, ErrorMessage } from 'vee-validate'
 import * as yup from 'yup'
 
-const address = useState('address', () => ({
+const address = ref({
     zip: '',
     address: '',
     building: '',
-}))
+})
 
 const schema = yup.object({
     zip: yup
@@ -37,10 +37,7 @@ const onSubmit = async (values) => {
         headers: {
             Authorization: `Bearer ${token}`,
         },
-        body: {
-            name: 'temp',
-            ...values,
-        },
+        body: values,
     })
 
     address.value = values

@@ -68,13 +68,11 @@ Route::middleware('auth:sanctum')->post('/profile', function (request $request) 
     $user = $request->user();
 
     $data = $request->validate([
-        'name' => 'required|string|max:255',
         'zip' => 'required|string|max:20',
         'address' => 'required|string|max:255',
         'building' => 'nullable|string|max:255',
         'avatar' => 'nullable|image|max:2048',
     ], [
-        'name.required' => 'ユーザー名を入力してください',
         'zip.required' => '郵便番号を入力してください',
         'address.required' => '住所を入力してください',
     ]);

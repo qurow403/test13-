@@ -35,6 +35,7 @@ const onSelectImage = (e) => {
 const schema = yup.object({
     category_ids: yup
         .array()
+        .required('カテゴリーを1つ以上選択してください')
         .min(1, 'カテゴリーを1つ以上選択してください'),
 
     condition_id: yup.string().required('商品の状態を選択してください'),
