@@ -68,25 +68,25 @@ definePageMeta({
             <div>
                 <label>ユーザー名</label>
                 <Field name="name" type="text" />
-                <ErrorMessage name="name" />
+                <ErrorMessage name="name" class="field-error" />
             </div>
 
             <div>
                 <label>メールアドレス</label>
                 <Field name="email" type="email" />
-                <ErrorMessage name="email"/>
+                <ErrorMessage name="email" class="field-error" />
             </div>
 
             <div>
                 <label>パスワード</label>
                 <Field name="password" type="password" />
-                <ErrorMessage name="password" />
+                <ErrorMessage name="password" class="field-error" />
             </div>
 
             <div>
                 <label>確認用パスワード</label>
                 <Field name="password_confirmation" type="password" />
-                <ErrorMessage name="password_confirmation" />
+                <ErrorMessage name="password_confirmation" class="field-error" />
             </div>
 
             <button type="submit">登録する</button>
@@ -98,3 +98,5 @@ definePageMeta({
         </Form>
     </div>
 </template>
+
+<style src="@/assets/css/register.css"></style>

@@ -9,7 +9,6 @@
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: #fff;
 }
 
 .logo-image {

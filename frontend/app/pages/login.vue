@@ -58,7 +58,7 @@ definePageMeta({
 </script>
 
 <template>
-    <div class="login">
+    <div class="auth-page">
         <h1>ログイン</h1>
 
         <Form :validation-schema="schema" @submit="onSubmit">
@@ -70,13 +70,13 @@ definePageMeta({
             <div>
                 <label>メールアドレス</label>
                 <Field name="email" type="email" />
-                <ErrorMessage name="email"/>
+                <ErrorMessage name="email" class="field-error" />
             </div>
 
             <div>
                 <label>パスワード</label>
                 <Field name="password" type="password" />
-                <ErrorMessage name="password" />
+                <ErrorMessage name="password" class="field-error" />
             </div>
 
             <button type="submit">ログインする</button>
@@ -88,3 +88,5 @@ definePageMeta({
         </Form>
     </div>
 </template>
+
+<style src="@/assets/css/login.css"></style>
