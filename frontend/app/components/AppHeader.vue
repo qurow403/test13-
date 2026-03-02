@@ -51,7 +51,6 @@ const logout = async () => {
         <div class="header-left">
             <NuxtLink to="/" class="logo-link">
                 <img src="/logo.png" alt="COACHTECH" class="logo-image" />
-                <span class="logo-text">COACHTECH</span>
             </NuxtLink>
         </div>
 
@@ -63,7 +62,86 @@ const logout = async () => {
             <button v-if="isLoggedIn" @click="logout">ログアウト</button>
             <NuxtLink v-else to="/login">ログイン</NuxtLink>
             <NuxtLink to="/profile">マイページ</NuxtLink>
-            <NuxtLink to="/products/sell">出品</NuxtLink>
+            <NuxtLink to="/products/sell" class="sell-button">出品</NuxtLink>
         </div>
     </header>
 </template>
+
+<style scoped>
+.header {
+    background-color: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    width: 100%;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+}
+
+.logo-image {
+    height: 32px;
+    margin-right: 8px;
+}
+
+.header-center {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.search {
+    width: 70%;
+    max-width: 500px;
+    padding: 10px 14px;
+    border-radius: 4px;
+    border: none;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-right a,
+.header-right button {
+    color: #fff;
+    background: none;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.header-right a:hover,
+.header-right button:hover {
+    opacity: 0.7;
+}
+
+.header-right
+.sell-button {
+    background-color: #fff;
+    color: #000;
+    padding: 6px 21px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.header-right
+.sell-button:hover {
+    opacity: 0.85;
+}
+</style>

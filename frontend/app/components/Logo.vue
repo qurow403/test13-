@@ -1,10 +1,19 @@
-<script setup>
-
-</script>
-
 <template>
     <NuxtLink to="/" class="logo-link">
         <img src="/logo.png" alt="COATCHTECH" class="logo-image" />
-        <span class="logo-text">COACHTECH</span>
     </NuxtLink>
 </template>
+
+<style scoped>
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+}
+
+.logo-image {
+    height: 32px;
+    margin-right: 8px;
+}
+</style>

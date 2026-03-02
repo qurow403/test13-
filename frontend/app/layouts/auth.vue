@@ -8,8 +8,20 @@ import Logo from '@/components/Logo.vue'
             <Logo />
         </header>
 
-        <main class="auth-main">
+        <main class="main">
             <slot />
         </main>
     </div>
 </template>
+
+<style scoped>
+.auth-header {
+    background-color: #000;
+    padding: 12px 24px;
+    width: 100%;
+}
+
+.main {
+    padding: 40px 24px;
+}
+</style>
