@@ -134,19 +134,19 @@ onMounted(async () => {
         <div>
             <label>ユーザー名</label>
             <Field name="name" />
-            <ErrorMessage name="name" />
+            <ErrorMessage name="name"  class="field-error" />
         </div>
 
         <div>
             <label>郵便番号</label>
             <Field name="zip"/>
-            <ErrorMessage name="zip" />
+            <ErrorMessage name="zip" class="field-error" />
         </div>
 
         <div>
             <label>住所</label>
             <Field name="address" />
-            <ErrorMessage name="address" />
+            <ErrorMessage name="address" class="field-error" />
         </div>
 
         <div>
@@ -158,3 +158,5 @@ onMounted(async () => {
     </Form>
 </div>
 </template>
+
+<style src="@/assets/css/profile/setup.css"></style>

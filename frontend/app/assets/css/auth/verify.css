@@ -1,0 +1,51 @@
+.verify {
+    text-align: center;
+    padding-top: 80px;
+}
+
+.verify-full {
+    width: 100%;
+}
+
+.verify-full p {
+    font-weight: bold;
+    font-size: 18px;
+    margin: 0;
+}
+
+.verify-content {
+    max-width: 480px;
+    margin: 45px auto 0;
+    padding: 0 20px;
+}
+
+.verify-main-button {
+    display: inline-block;
+    padding: 16px 32px;
+    margin-bottom: 24px;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    background-color: #e5e5e5;
+    border: 1px solid #000;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.verify-main-button:hover {
+    background-color: #d4d4d4;
+}
+
+.verify-resend {
+    background: none;
+    border: none;
+    color: #007bff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 30px;
+}
+
+.verify-resend:hover {
+    text-decoration: underline;
+}

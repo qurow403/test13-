@@ -55,22 +55,24 @@ const onSubmit = async (values) => {
 
         <div>
             <label>郵便番号</label>
-            <Field name="zip" />
-            <ErrorMessage name="zip" />
+            <Field name="zip" type="text" />
+            <ErrorMessage name="zip" class="field-error" />
         </div>
 
         <div>
             <label>住所</label>
-            <Field name="address" />
-            <ErrorMessage name="address" />
+            <Field name="address" type="text" />
+            <ErrorMessage name="address" class="field-error" />
         </div>
 
         <div>
             <label>建物名</label>
-            <Field name="building" />
+            <Field name="building" type="text" />
         </div>
 
         <button type="submit">更新する</button>
     </Form>
 </div>
 </template>
+
+<style src="@/assets/css/profile/address.css"></style>

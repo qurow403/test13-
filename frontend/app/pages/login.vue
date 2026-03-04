@@ -89,4 +89,4 @@ definePageMeta({
     </div>
 </template>
 
-<style src="@/assets/css/login.css"></style>
+<style src="@/assets/css/auth/login.css"></style>

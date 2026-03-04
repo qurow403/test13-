@@ -25,15 +25,22 @@ definePageMeta({
 
 <template>
 <div class="verify">
-    <p>登録していただいたメールアドレスに認証メールを送付しました。</p>
-    <p>メール認証を完了してください。</p>
+    <div class="verify-full">
+        <p>登録していただいたメールアドレスに認証メールを送付しました。</p>
+        <p>メール認証を完了してください。</p>
+    </div>
 
-    <button class="primary" @click="openMail">
-        認証はこちらから(認証メールを確認する)
-    </button>
+    <div class="verify-content">
+        <button class="verify-main-button" @click="openMail">
+            認証はこちらから<br>
+            (認証メールを確認する)
+        </button>
+    </div>
 
-    <button class="link" @click="resend">
+    <button class="verify-resend" @click="resend">
         認証メールを再送する
     </button>
 </div>
 </template>
+
+<style src="@/assets/css/auth/verify.css"></style>
