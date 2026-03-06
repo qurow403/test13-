@@ -10,3 +10,9 @@ defineProps({
         <p>{{ description }}</p>
     </div>
 </template>
+
+<style scoped>
+.description h3 {
+    font-size: 28px;
+}
+</style>

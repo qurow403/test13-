@@ -62,7 +62,7 @@ const submitComment = async () => {
 <div class="comments">
     <h3>コメント ({{ comments.length }})</h3>
 
-    <div v-for="comment in comments" :key="comment.id">
+    <div v-for="comment in comments" :key="comment.id" class="comment-item">
         <div class="comment-header">
             <img
                 :src="comment.avatar ? baseURL + comment.avatar : null"
@@ -85,3 +85,5 @@ const submitComment = async () => {
     </div>
 </div>
 </template>
+
+<style src="@/assets/css/product/comment.css"></style>

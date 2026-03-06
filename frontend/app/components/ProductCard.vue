@@ -31,3 +31,5 @@ const imageUrl = computed(() => {
     <p class="name">{{ product.name }}</p>
 </NuxtLink>
 </template>
+
+<style src="@/assets/css/product/card.css"></style>

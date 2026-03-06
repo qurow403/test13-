@@ -1,0 +1,39 @@
+.product-detail {
+    max-width: 1100px;
+    margin: 60px auto;
+    padding: 0 24px;
+}
+
+.product-detail .top {
+    display: flex;
+    gap: 60px;
+    align-items: flex-start;
+}
+
+.image {
+    flex: 1;
+}
+
+.image img {
+    width: 100%;
+}
+
+.right {
+    flex: 1;
+}
+
+.right > * {
+    margin-bottom: 40px;
+}
+
+.summary {
+    flex: 1;
+}
+
+.summary h1 {
+    margin-bottom: 0;
+}
+
+.summary .brand {
+    margin-top: 0;
+}

@@ -7,7 +7,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import ProductCard from '~/components/ProductCard.vue'
 
-const user = ref('null')
+const user = ref(null)
 const currentTab = ref('出品')
 
 const route = useRoute()
@@ -98,17 +98,21 @@ onMounted(async () => {
 <template>
 <div>
     <div class="profile">
+        <div v-if="user" class="profile-header">
+            <div class="avatar">
+                <img :src="user.avatar
+                    ? 'http://localhost:8000' + user.avatar
+                    : 'https://placehold.jp/100×100.png'"
+                />
+            </div>
 
-        <div v-if="user" class="user">
-            <img :src="user.avatar
-                ? 'http://localhost:8000' + user.avatar
-                : 'https://placehold.jp/100×100.png'"
-                class="icon">
-            <h2>{{ user.name }}</h2>
+            <div class="profile-info">
+                <h2>{{ user.name }}</h2>
 
-            <NuxtLink to="/profile/setup" class="edit">
-                プロフィールを編集
-            </NuxtLink>
+                <NuxtLink to="/profile/setup" class="edit-button">
+                    プロフィールを編集
+                </NuxtLink>
+            </div>
         </div>
 
         <div class="tabs">
@@ -128,3 +132,6 @@ onMounted(async () => {
 
 </div>
 </template>
+
+<style src="@/assets/css/profile/index.css"></style>
+<style src="@/assets/css/product/card.css"></style>

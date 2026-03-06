@@ -1,7 +1,6 @@
 .profile-setup {
     max-width: 480px;
     margin: 50px auto;
-    text-align: center;
     padding-bottom: 60px;
 }
 
@@ -9,6 +8,7 @@
     font-size: 28px;
     font-weight: bold;
     margin-bottom: 40px;
+    text-align: center;
 }
 
 .avatar-area {
@@ -16,6 +16,7 @@
     align-items: center;
     gap: 24px;
     margin-bottom: 40px;
+    width: 100%;
 }
 
 .avatar {
@@ -24,9 +25,12 @@
     border-radius: 50%;
     overflow: hidden;
     background-color: #f3f4f6;
+
     display: flex;
     align-items: center;
     justify-content: center;
+
+    flex-shrink: 0;
 }
 
 .avatar img {
@@ -48,6 +52,7 @@
     border-radius: 10px;
     cursor: pointer;
     font-weight: bold;
+    white-space: nowrap;
     transition: 0.2s;
 }
 
@@ -65,7 +70,7 @@
 .profile-setup form > div {
     width: 100%;
     margin-bottom: 24px;
-    text-align: left;
+    text-align: stretch;
 }
 
 .profile-setup form > div:last-of-type {

@@ -63,22 +63,28 @@ const addComment = (comment) => {
 
 <template>
 <div v-if="product" class="product-detail">
+
     <div class="top">
         <ProductImage :image="product.image || ''" />
-        <ProductSummary :product="product" @like="toggleLike" />
+
+        <div class="right">
+            <ProductSummary :product="product" @like="toggleLike" />
+            <ProductDescription :description="product.description" />
+            <ProductInfo
+                :categories="product.categories || []"
+                :condition="product.condition || ''"
+            />
+            <ProductComments
+                :comments="product.comments"
+                @new-comment="addComment"
+            />
+        </div>
     </div>
-
-    <ProductDescription :description="product.description" />
-
-    <ProductInfo
-        :categories="product.categories || []"
-        :condition="product.condition || ''"
-    />
-
-    <ProductComments :comments="product.comments" @new-comment="addComment" />
 </div>
 
 <div v-else>
     商品が見つかりません
 </div>
 </template>
+
+<style src="@/assets/css/product/detail.css"></style>

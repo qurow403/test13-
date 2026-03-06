@@ -1,0 +1,72 @@
+.buy {
+    width: 100%;
+    padding: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: #ff4d4f;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.buy:hover {
+    opacity: 0.9;
+}
+
+.price {
+    font-size: 32px;
+    margin-bottom: 2px;
+}
+
+.price .yen {
+    font-size: 21px;
+    margin-right: -10px;
+}
+
+.price .tax {
+    font-size: 21px;
+}
+
+.meta {
+    display: flex;
+    gap: 43px;
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+.meta > span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+}
+
+.meta .icon {
+    font-size: 35px;
+    line-height: 1;
+}
+
+.like {
+    color: #777;
+    cursor: pointer;
+}
+
+.like.active {
+    color: #ff4d4f;
+}
+
+.comment {
+    color: #777;
+}
+
+.icon-img {
+    width: 35px;
+    height: 35px;
+    display: block;
+}
+
+.count {
+    font-size: 16px;
+}

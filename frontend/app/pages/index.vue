@@ -77,9 +77,13 @@ watch(
 <template>
 <div>
     <ProductTabs :current="currentTab" @change="currentTab = $event" />
-
-    <div class="grid">
-        <ProductCard v-for="product in products" :key="product.id" :product="product" />
+    <div class="container">
+        <div class="grid">
+            <ProductCard v-for="product in products" :key="product.id" :product="product" />
+        </div>
     </div>
 </div>
 </template>
+
+<style src="@/assets/css/product/tabs.css"></style>
+<style src="@/assets/css/product/list.css"></style>
