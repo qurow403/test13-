@@ -120,3 +120,5 @@ onMounted(() => {
     商品を読み込み中...
 </div>
 </template>
+
+<style src="@/assets/css/purchase/purchase.css"></style>

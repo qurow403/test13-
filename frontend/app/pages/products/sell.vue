@@ -31,16 +31,24 @@ const onSelectImage = (e) => {
     imagePreview.value = URL.createObjectURL(file)
 }
 
-
 const schema = yup.object({
     category_ids: yup
         .array()
         .required('カテゴリーを1つ以上選択してください')
         .min(1, 'カテゴリーを1つ以上選択してください'),
 
-    condition_id: yup.string().required('商品の状態を選択してください'),
-    name: yup.string().required('商品名を入力してください'),
-    description: yup.string().required('商品の説明を入力してください'),
+    condition_id: yup
+        .string()
+        .required('商品の状態を選択してください'),
+
+    name: yup
+        .string()
+        .required('商品名を入力してください'),
+
+    description: yup
+        .string()
+        .required('商品の説明を入力してください'),
+
     price: yup
         .number()
         .typeError('数値を入力してください')
@@ -94,13 +102,13 @@ const onSubmit = async (values) => {
 <div class="sell">
     <h1>商品の出品</h1>
 
-    <section class="box">
+    <section class="box image-section">
         <h2>商品画像</h2>
 
         <div class="image-box">
             <img v-if="imagePreview" :src="imagePreview" />
-            <label v-else class="image-select">
-                画像を選択する
+            <label class="image-select">
+                <span v-if="!imagePreview">画像を選択する</span>
                 <input type="file" hidden accept="image/*" @change="onSelectImage">
             </label>
         </div>
@@ -110,7 +118,7 @@ const onSubmit = async (values) => {
         <section class="box">
             <h2>商品の詳細</h2>
 
-            <div>
+            <div class="form-item">
                 <label>カテゴリー</label>
 
                 <div class="category-buttons">
@@ -120,42 +128,42 @@ const onSubmit = async (values) => {
                     </label>
                 </div>
 
-                <ErrorMessage name="category_ids" />
+                <ErrorMessage name="category_ids" class="error" />
             </div>
 
-            <div>
+            <div class="form-item">
                 <label>商品の状態</label>
-                <Field as="select" name="condition_id">
+                <Field as="select" name="condition_id" class="select">
                     <option value="">選択してください</option>
                     <option v-for="c in conditions" :key="c.id" :value="c.id">
                         {{ c.name }}
                     </option>
                 </Field>
-                <ErrorMessage name="condition_id" />
+                <ErrorMessage name="condition_id" class="error" />
             </div>
         </section>
 
         <section class="box">
             <h2>商品名と説明</h2>
 
-            <div>
+            <div class="form-item">
                 <label>商品名</label>
-                <Field name="name" />
-                <ErrorMessage name="name" />
+                <Field name="name" class="input" />
+                <ErrorMessage name="name" class="error" />
             </div>
 
-            <div>
+            <div class="form-item">
                 <label>ブランド名</label>
-                <Field name="brand" />
+                <Field name="brand" class="input" />
             </div>
 
-            <div>
+            <div class="form-item">
                 <label>商品の説明</label>
-                <Field as="textarea" name="description" />
-                <ErrorMessage name="description" />
+                <Field as="textarea" name="description" class="textarea" />
+                <ErrorMessage name="description" class="error" />
             </div>
 
-            <div>
+            <div class="form-item">
                 <label>販売価格</label>
 
                 <div class="price-input">
@@ -163,7 +171,7 @@ const onSubmit = async (values) => {
                     <Field name="price" type="number" class="input" />
                 </div>
 
-                <ErrorMessage name="price" />
+                <ErrorMessage name="price" class="error" />
             </div>
         </section>
 
@@ -173,3 +181,5 @@ const onSubmit = async (values) => {
     </Form>
 </div>
 </template>
+
+<style src="@/assets/css/product/sell.css"></style>

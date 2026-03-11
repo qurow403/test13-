@@ -7,7 +7,14 @@ defineProps({
 <template>
     <div class="product">
         <img :src="product.image" alt="" />
-        <h2>{{ product.name }}</h2>
-        <p>¥{{ product.price }}</p>
+
+        <div class="product-info">
+            <h2>{{ product.name }}</h2>
+
+            <p class="price">
+            <span class="yen">¥</span>
+                {{ product.price }}
+            </p>
+        </div>
     </div>
 </template>

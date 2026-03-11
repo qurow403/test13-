@@ -14,12 +14,23 @@ const paymentLabels = {
 
 <template>
   <div class="summary">
-    <p>商品代金 ¥{{ price }}</p>
+    <div class="summary-box">
+      <p>
+        <span>商品代金</span>
 
-    <p>
-      支払い方法
-      {{ paymentLabels[paymentMethod] || '未選択' }}
-    </p>
+        <span class="summary-price">
+          <span class="yen">¥</span>
+          {{ price }}
+        </span>
+      </p>
+
+      <p>
+        <span>支払い方法</span>
+        <span>
+        {{ paymentLabels[paymentMethod] || '未選択' }}
+        </span>
+      </p>
+    </div>
 
     <button :disabled="!paymentMethod" @click="emit('buy')">
       購入する
