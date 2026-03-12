@@ -11,11 +11,12 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
 ## 2.backend (Laravel)
  - cd backend
  - composer install
- - cp .env.example .env  .envファイル作成
+ - cp .env.example .env    .envファイル作成
  - php artisan key:generate
  - php artisan migrate
  - php artisan db:seed
- - php artisan serve
+ - php artisan serve    サーバー起動
+ - php artisan test    テスト実行
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ## 3.frontend (Nuxt)
@@ -25,37 +26,46 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ## 開発環境
 
+### フロントエンド
+
+- http://localhost:3000
+
+### APIサーバー
+
+- http://localhost:8000/api
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
  ## 認証関連
  - 会員登録画面
- http://localhost:3000/register
+   http://localhost:3000/register
 
  - ログイン画面
- http://localhost:3000/login
+   http://localhost:3000/login
 
  - メール認証画面
- http://localhost:3000/email/verify/{id}/{hash}
+   http://localhost:3000/email/verify/{id}/{hash}
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
  ## 商品機能
  - 商品一覧画面
- http://localhost:3000/
+   http://localhost:3000/
 
  - 商品詳細画面
- http://localhost:3000/products/{id}
+   http://localhost:3000/products/{id}
 
  - 商品購入画面
- http://localhost:3000/products/{id}/purchase
+   http://localhost:3000/products/{id}/purchase
 
  - 商品出品画面
- http://localhost:3000/products/sell
+   http://localhost:3000/products/sell
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
  ## ユーザー機能
  - プロフィール画面
- http://localhost:3000/profile
+   http://localhost:3000/profile
 
  - プロフィール編集画面
- http://localhost:3000/profile/setup
+   http://localhost:3000/profile/setup
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
