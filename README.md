@@ -5,33 +5,35 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
 
 ## 環境構築
 
-# 1.リポジトリをクローン
+## 1.リポジトリをクローン
 
- ・git clone https://github.com/qurow403/test13-.git
+ - git clone https://github.com/qurow403/test13-.git
 
-# 2.backend (Laravel)
+## 2.backend (Laravel)
 
- ・cd backend
- ・composer install
+ - cd backend
+
+
+ - composer install
 
  .envファイル作成
- ・cp .env.example .env
+ - cp .env.example .env
 
- ・php artisan key:generate
- ・php artisan migrate
- ・php artisan db:seed
- ・php artisan serve
+ - php artisan key:generate
+ - php artisan migrate
+ - php artisan db:seed
+ - php artisan serve
 
-# 3.frontend (Nuxt)
+## 3.frontend (Nuxt)
 
- ・cd frontend
- ・npm install
- ・npm run dev
+ - cd frontend
+ - npm install
+ - npm run dev
 
 
 ## 開発環境
 
- # 認証関連
+ ## 認証関連
  ・会員登録画面
  http://localhost:3000/register
 
@@ -41,7 +43,7 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
  ・メール認証画面
  http://localhost:3000/email/verify/{id}/{hash}
 
- # 商品機能
+ ## 商品機能
  ・商品一覧画面
  http://localhost:3000/
 
@@ -54,7 +56,7 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
  ・商品出品画面
  http://localhost:3000/products/sell
 
- #　ユーザー機能
+ ## ユーザー機能
  ・プロフィール画面
  http://localhost:3000/profile
 
@@ -65,7 +67,7 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
 
 ## 使用技術 (実行環境)
 
-# フロントエンド
+## フロントエンド
 
  ・Nuxt 4.2.2
  ・Vue 3.5.26
@@ -73,7 +75,7 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
  ・yup 1.7.1
  ・CSS
 
-# バックエンド
+## バックエンド
 
  ・Laravel 12
  ・Laravel Sanctum
@@ -82,13 +84,13 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
 
  ・SQLite
 
-# 開発ツール
+## 開発ツール
 
  ・MailHog
 
 
 ## ER図
-
+![ER図](docs/er-diagram.png)
 
 
 ### メール認証画面の文言・挙動について
