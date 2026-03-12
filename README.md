@@ -54,7 +54,7 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
    http://localhost:3000/login
 
  - メール認証画面
-   http://localhost:3000/email/verify/{id}/{hash}
+   http://localhost:3000/email/verify
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
  ## 商品機能
