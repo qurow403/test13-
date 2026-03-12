@@ -5,12 +5,10 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
 ## 環境構築
 
 ## 1.リポジトリをクローン
-
  - git clone https://github.com/qurow403/test13-.git
-
-
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ## 2.backend (Laravel)
-
  - cd backend
  - composer install
  - cp .env.example .env  .envファイル作成
@@ -18,10 +16,9 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
  - php artisan migrate
  - php artisan db:seed
  - php artisan serve
-
-
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ## 3.frontend (Nuxt)
-
  - cd frontend
  - npm install
  - npm run dev
@@ -37,7 +34,8 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
 
  - メール認証画面
  http://localhost:3000/email/verify/{id}/{hash}
-
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
  ## 商品機能
  - 商品一覧画面
  http://localhost:3000/
@@ -50,7 +48,8 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
 
  - 商品出品画面
  http://localhost:3000/products/sell
-
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
  ## ユーザー機能
  - プロフィール画面
  http://localhost:3000/profile
@@ -67,14 +66,17 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
  - vee-validate 4.15.1
  - yup 1.7.1
  - CSS
-
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ## バックエンド
  - Laravel 12
  - Laravel Sanctum
-
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ## データベース
  - SQLite
-
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ## 開発ツール
  - MailHog
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
@@ -84,7 +86,6 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ### メール認証画面の文言・挙動について
-
 本アプリは SPA（Single Page Application）構成のため、
 メール認証は「メール内の認証リンクをユーザーが別タブで開く」フローになります。
 
