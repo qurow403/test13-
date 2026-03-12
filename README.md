@@ -25,9 +25,7 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
  - cd frontend
  - npm install
  - npm run dev
-
-
-
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ## 開発環境
 
  ## 認証関連
@@ -59,14 +57,11 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
 
  - プロフィール編集画面
  http://localhost:3000/profile/setup
-
-
-
-
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ## 使用技術 (実行環境)
 
 ## フロントエンド
-
  - Nuxt 4.2.2
  - Vue 3.5.26
  - vee-validate 4.15.1
@@ -74,25 +69,20 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
  - CSS
 
 ## バックエンド
-
  - Laravel 12
  - Laravel Sanctum
 
 ## データベース
-
  - SQLite
 
 ## 開発ツール
-
  - MailHog
-
-
-
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ## ER図
 ![ER図](docs/er-diagram.png)
-
-
-
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ### メール認証画面の文言・挙動について
 
 本アプリは SPA（Single Page Application）構成のため、
@@ -108,5 +98,3 @@ SPA ではメールリンククリック後の状態変化を自動で検知で�
 
 MailHog
 http://0.0.0.0:8025
-
-
