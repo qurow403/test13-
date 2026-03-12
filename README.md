@@ -11,12 +11,23 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
 ## 2.backend (Laravel)
  - cd backend
  - composer install
- - cp .env.example .env　　.envファイル作成
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+ ## .envファイル作成
+ - cp .env.example .env
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
  - php artisan key:generate
  - php artisan migrate
  - php artisan db:seed
- - php artisan serve　　サーバー起動
- - php artisan test　　テスト実行
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+ ## サーバー起動
+ - php artisan serve
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+ ## テスト実行
+ - php artisan test
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ## 3.frontend (Nuxt)
