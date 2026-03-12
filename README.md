@@ -58,6 +58,7 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
  http://localhost:3000/profile/setup
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ## 使用技術 (実行環境)
 
 ## フロントエンド
