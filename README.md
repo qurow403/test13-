@@ -1,8 +1,7 @@
 # SPAフリマアプリ
 
 Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケーションです。
-
-
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ## 環境構築
 
 ## 1.リポジトリをクローン
@@ -28,11 +27,12 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
  - npm run dev
 
 
+
 ## 開発環境
 
  ## 認証関連
  - 会員登録画面
- 　http://localhost:3000/register
+ http://localhost:3000/register
 
  - ログイン画面
  http://localhost:3000/login
@@ -62,6 +62,7 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
 
 
 
+
 ## 使用技術 (実行環境)
 
 ## フロントエンド
@@ -77,7 +78,7 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
  - Laravel 12
  - Laravel Sanctum
 
-# データベース
+## データベース
 
  - SQLite
 
@@ -86,8 +87,10 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
  - MailHog
 
 
+
 ## ER図
 ![ER図](docs/er-diagram.png)
+
 
 
 ### メール認証画面の文言・挙動について
@@ -105,3 +108,5 @@ SPA ではメールリンククリック後の状態変化を自動で検知で�
 
 MailHog
 http://0.0.0.0:8025
+
+
