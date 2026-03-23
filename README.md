@@ -18,7 +18,12 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
  - php artisan key:generate
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+ ## SQLite作成(初回のみ)
+ php artisan migrate 実行時にSQLiteファイル作成確認が表示された場合は「Yes」を選択してください。
  - php artisan migrate
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
  - php artisan db:seed
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
@@ -37,13 +42,13 @@ Laravelで構築したAPIとNuxtを使用したSPA構成のフリマアプリケ
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 ## 開発環境
 
-### フロントエンド
+### フロントエンド(商品一覧)
 
 - http://localhost:3000
 
 ### APIサーバー
 
-- http://localhost:8000/api
+- http://localhost:8000
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　
  ## 認証関連
